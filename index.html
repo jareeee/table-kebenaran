@@ -8,34 +8,35 @@
 </head>
 <body>
 
-    <h1>Tabel Kebenaran Dinamis</h1>
+    <h1>Tabel Kebenaran</h1>
 
     <div class="variable-inputs">
-      <label>
-          <input type="checkbox" class="var-checkbox" value="a" checked> a
-      </label>
-      <label>
-          <input type="checkbox" class="var-checkbox" value="b" checked> b
-      </label>
-      <label>
-          <input type="checkbox" class="var-checkbox" value="c"> c
-      </label>
-      <label>
-          <input type="checkbox" class="var-checkbox" value="d"> d
-      </label>
-      <br><br>
-  
-      <input type="text" id="logic-expression" placeholder="Masukkan ekspresi logika (misal: a || b)">
-      <br><br>
-      
-      <button onclick="generateTruthTable()">Generate Tabel Kebenaran</button>
+        <label>
+            <input type="checkbox" class="var-checkbox" value="a" checked> a
+        </label>
+        <label>
+            <input type="checkbox" class="var-checkbox" value="b" checked> b
+        </label>
+        <label>
+            <input type="checkbox" class="var-checkbox" value="c"> c
+        </label>
+        <label>
+            <input type="checkbox" class="var-checkbox" value="d"> d
+        </label>
+        <br><br>
+    
+        <input type="text" id="logic-expression" placeholder="Masukkan ekspresi logika (misal: a || b)">
+        <br><br>
+    
+        <button onclick="generateTruthTable()">Generate Tabel Kebenaran</button>
     </div>
-  
+    
+    <h3>Daftar Ekspresi Logika</h3>
+    <div id="expression-list"></div>
+    
     <table id="truth-table">
-        <thead id="table-header">
-        </thead>
-        <tbody id="table-body">
-        </tbody>
+        <thead id="table-header"></thead>
+        <tbody id="table-body"></tbody>
     </table>
 
     <script src="script.js"></script>
