@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabel Kebenaran Fleksibel</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #2e2e2e;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px auto;
+            table-layout: fixed;
+        }
+
+        th, td {
+            border: 1px solid #fff;
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #444;
+        }
+
+        td {
+            background-color: #333;
+        }
+
+        .variable-inputs {
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Tabel Kebenaran Dinamis</h1>
+
+    <!-- Bagian untuk memilih variabel -->
+    <div class="variable-inputs">
+      <label>
+          <input type="checkbox" class="var-checkbox" value="a" checked> a
+      </label>
+      <label>
+          <input type="checkbox" class="var-checkbox" value="b" checked> b
+      </label>
+      <label>
+          <input type="checkbox" class="var-checkbox" value="c"> c
+      </label>
+      <label>
+          <input type="checkbox" class="var-checkbox" value="d"> d
+      </label>
+      <br><br>
+  
+      <!-- Tambahkan input untuk ekspresi logika -->
+      <input type="text" id="logic-expression" placeholder="Masukkan ekspresi logika (misal: a || b)">
+      <br><br>
+      
+      <button onclick="generateTruthTable()">Generate Tabel Kebenaran</button>
+    </div>
+  
+  
+
+    <!-- Tabel yang akan dihasilkan -->
+    <table id="truth-table">
+        <thead id="table-header">
+        </thead>
+        <tbody id="table-body">
+        </tbody>
+    </table>
+
+    <script>
+        let expressions = []
+
+        function generateTruthTable() {
+          // Ambil variabel yang dipilih
+          const checkboxes = document.querySelectorAll('.var-checkbox:checked');
+          const variables = Array.from(checkboxes).map(cb => cb.value);
+          const numVars = variables.length;
+
+          const logicExpression = document.getElementById('logic-expression').value;
+
+          if (logicExpression === '') {
+              alert('Masukkan ekspresi logika!');
+              return;
+          }
+
+          expressions.push(logicExpression)
+
+          // Clear tabel sebelumnya
+          const tableHeader = document.getElementById('table-header');
+          const tableBody = document.getElementById('table-body');
+          tableHeader.innerHTML = '';
+          tableBody.innerHTML = '';
+
+          if (numVars === 0) {
+              alert('Pilih setidaknya satu variabel!');
+              return;
+          }
+
+          // Membuat header tabel
+          let headerRow = '<tr>';
+          variables.forEach(varName => {
+            headerRow += `<th>${varName}</th>`;
+          });
+
+          expressions.forEach((expr, index) => {
+            headerRow += `<th>${expr}</th>`;
+          });
+
+          headerRow += '</tr>';
+          tableHeader.innerHTML = headerRow;
+
+          // Membuat body tabel
+          const numRows = Math.pow(2, numVars);
+          for (let i = numRows - 1; i >= 0; i--) {
+            let row = '<tr>';
+            let binaryString = i.toString(2).padStart(numVars, '0');
+            let truthValues = {};
+
+            // Tambahkan nilai true/false untuk setiap variabel
+            variables.forEach((varName, index) => {
+              const value = binaryString[index] === '1' ? 1 : 0;
+              truthValues[varName] = value;
+                row += `<td>${value}</td>`;
+            });
+
+            // Evaluasi setiap ekspresi logika yang telah dimasukkan
+            expressions.forEach(expr => {
+              let result;
+              try {
+                // Ganti setiap variabel dalam ekspresi dengan nilainya
+                let expression = expr;
+                variables.forEach(varName => {
+                  const regex = new RegExp(`\\b${varName}\\b`, 'g');
+                  expression = expression.replace(regex, truthValues[varName]);
+                });
+
+                // Evaluasi ekspresi logika
+                result = eval(expression) ? 1 : 0;
+              } catch (e) {
+                  result = 'Error';  // Jika ada kesalahan dalam ekspresi logika
+              }
+
+              // Tambahkan hasil evaluasi ke dalam baris
+              row += `<td>${result}</td>`;
+            });
+
+            row += '</tr>';
+            tableBody.innerHTML += row;
+          }
+        }
+    </script>
+
+</body>
+</html>
