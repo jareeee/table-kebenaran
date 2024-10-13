@@ -30,3 +30,24 @@ td {
 .variable-inputs {
   margin: 20px;
 }
+
+.how-to-use {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 300px;
+  background-color: red;
+  border: 1px solid #ddd;
+  padding: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.how-to-use h3 {
+  margin-top: 0;
+}
+
+.how-to-use ul {
+  padding-left: 0;
+  list-style-type: none;
+}
