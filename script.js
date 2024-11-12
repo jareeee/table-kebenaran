@@ -1,9 +1,5 @@
 let expressions = []
 
-document.getElementById('logic-expression').addEventListener('click', function() {
-  this.value = '';
-});
-
 function generateTruthTable() {
   const checkboxes = document.querySelectorAll('.var-checkbox:checked');
   const variables = Array.from(checkboxes).map(cb => cb.value);
